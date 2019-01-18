@@ -3,8 +3,14 @@ var timer = {
   start: 1,
   end: 1
 }
-//var starttime = 1;
-//var endtime = 1;
+function setup() {
+  var chosencase = cases[Math.floor(Math.random() * cases.length)];
+  var scramble = generate(chosencase.alg);
+  $("#scramble").text(scramble);
+  $("#image").attr("src", "http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=200&alg="+scramble);
+  $("#set").text(" "+chosencase.set);
+  $("#case").text(" "+chosencase.name);
+}
 var time = new Date();
 function updateTimer() {
   if (timing == true) {
@@ -26,6 +32,9 @@ $(document).on('keyup',function(e) {
       timing = false;
       timer.end = time.getTime();
       $("#timer").text(Math.round((timer.end-timer.start)/10)/100 + " seconds");
+      setup();
     }
   }
 });
+
+setup();
