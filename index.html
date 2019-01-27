@@ -6,67 +6,63 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <title>COLL Trainer</title>
   </head>
+
   <body>
     <div class="container">
-      <nav class="nav">
-        <a class="nav-link" href="#">Progress tracker</a>
-        <a class="nav-link" href="#">Mobile Mode</a>
-      </nav>
-      <div id="scramble" class="alert alert-primary" role="alert">(scramble)</div>
-      <div class="jumbotron">
-        <h1 class="display-3">
-          <b>
-            <span id="timer">press space</span>
-          </b>
-          <img id="image" src="http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=200"></img>
-        </h1>
-        <h1>
-          set:<span id="set">n/a</span>
-          / case:<span id="case">null</span>
-          / set avg.:<span id="setavg">null</span>
-          / case avg.:<span id="caseavg">null</span>
-        </h1>
-        <p class="lead">
-          <b>mode: random</b>
-        </p>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            modes
-          </button>
-          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#pickcases">
-            pick cases
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">worst case</a>
-            <a class="dropdown-item" href="#">cycle cases</a>
-            <a class="dropdown-item" href="#">random</a>
-          </div>
+      <div class="jumbotron jumbotron-fluid text-center rounded-bottom border border-top-0 border-secondary">
+        <div class="container">
+          <h1 class="display-1">
+            <b>
+              <span id="timer">press space</span>
+            </b>
+            <img id="image" src="http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=100"></img>
+          </h1>
+          <h3 id="scramble" class="text-secondary"></h3>
+          <h4>
+            <nav class="nav justify-content-center">
+              <!--a class="nav-link" href="#">mode: random</a-->
+              <a class="nav-link" href="#" onclick="$('#pickcases').modal()">cases</a>
+              <!--a class="nav-link" href="#">random AUF: off</a-->
+            </nav>
+          </h4>
         </div>
       </div>
     </div>
+    <div class="container text-center">
+      <h5>
+        times:
+        <span id="times">none</span>
+        <a href="#" onclick="clearTimes()">clear</a>
+      </h5>
+    </div>
+    <div class="container text-center text-secondary">
+      <hr>
+      <h5>made by u/ayythernaut</h5>
+      <p>
+        COLL trainer v1.0
+        <br>this is the bare minimum release and many more features will hopefully follow
+      </p>
+    </div>
 
     <div class="modal fade" id="pickcases" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Pick COLL Cases</h5>
+            <h5 class="modal-title text-center">cases</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <ul>
-              <li>H</l1>
-              <li>Pi</l1>
-              <li>T</l1>
-              <li>U</l1>
-              <li>L</l1>
-              <li>Sune</l1>
-              <li>Anti-Sune</l1>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="container">
+              <h5>
+                <nav class="nav justify-content-center">
+                  <a class="nav-link" href="#" onclick="selectAll()">select all</a>
+                  <a class="nav-link" href="#" onclick="deselectAll()">deselect all</a>
+                </nav>
+              </h5>
+            </div>
+            <div class="container text-center" id="cases"></div>
           </div>
         </div>
       </div>
