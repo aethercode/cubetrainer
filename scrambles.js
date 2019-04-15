@@ -1,4 +1,11 @@
 var auf = false;
+
+var aufList = ["U", "U2", "U'", ""];
+
+function genAuf() {
+  return aufList[Math.floor(Math.random()*aufList.length)];
+}
+
 var cases = [
   {set: "U", name: "U1", alg: "R' U' R U' R' U2 R2 U R' U R U2 R'", alts: []},
   {set: "U", name: "U2", alg: "R' F R U' R' U' R U R' F' R U R' U' R' F R F' R", alts: []},
@@ -47,17 +54,33 @@ function generate(input) {
   var length = input.length;
   var position = 0;
   var currentchunk = "";
+  if (auf) {
+    moves.push(genAuf());
+  }
+  var chunks = 0;
   while (position < length) {
     if (input.charAt(position) !== " ") {
       currentchunk += input.charAt(position);
     } else {
-      moves.push(currentchunk);
+      if (chunks == 0 && auf) {
+        if (currentchunk == "U" || currentchunk == "U'" || currentchunk == "U2") {
+          moves.push("");
+        } else {
+          moves.push(currentchunk);
+        }
+      } else {
+        moves.push(currentchunk);
+      }
       currentchunk = "";
+      chunks += 1;
     }
     position += 1;
   }
   moves.push(currentchunk);
   currentchunk = "";
+  if (auf) {
+    moves.push(genAuf());
+  }
   moves.reverse();
   for (num in moves) {
     if (moves[num] == "R") {

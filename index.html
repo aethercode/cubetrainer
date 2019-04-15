@@ -4,27 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>COLL Trainer</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Roboto', serif;
+      }
+      #scramble {
+        font-family: 'Roboto Mono';
+      }
+    </style>
+    <title>CxLL trainer</title>
   </head>
 
   <body>
+    <div class="container text-center text-danger" id="datasavewarn">
+      Warning: saving data is in the works, but for now, <strong>when you close the browser window your times will be lost. </strong><a href="#" onclick="$('#datasavewarn').remove();">I understand</a>
+    </div>
     <div class="container">
-      <div class="jumbotron jumbotron-fluid text-center rounded-bottom border border-top-0 border-secondary">
+      <div class="jumbotron jumbotron-fluid text-center">
         <div class="container">
-          <h1 class="display-1">
+          <h1 class="display-2">
             <b>
               <span id="timer">press space</span>
             </b>
-            <img id="image" src="http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=100"></img>
+            <img id="image" src="http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=100&stage=cll"></img>
           </h1>
           <h3 id="scramble" class="text-secondary"></h3>
-          <h4>
+          <h3>
             <nav class="nav justify-content-center">
-              <!--a class="nav-link" href="#">mode: random</a-->
               <a class="nav-link" href="#" onclick="$('#pickcases').modal()">cases</a>
-              <!--a class="nav-link" href="#">random AUF: off</a-->
             </nav>
-          </h4>
+          </h3>
+          <h5>
+            <nav class="nav justify-content-center">
+              <a class="nav-link text-secondary" href="#" onclick="$('#settings').modal()">settings</a>
+              <a class="nav-link text-secondary" href="#" onclick="$('#info').modal()">about</a>
+              <a class="nav-link text-secondary" href="#" onclick="generalStatsModal()">statistics</a>
+            </nav>
+          </h5>
         </div>
       </div>
     </div>
@@ -32,16 +50,12 @@
       <h5>
         times:
         <span id="times">none</span>
-        <a href="#" onclick="clearTimes()">clear</a>
+        <nav class="nav justify-content-center">
+          <a class="nav-link" href="#" onclick="clearTimes()">clear</a>
+          <a class="nav-link" href="#" onclick="toggleTimes()" id="timetoggle">hide</a>
+          <a class="nav-link" href="#" onclick="deleteLastTime()">delete last</a>
+        </nav>
       </h5>
-    </div>
-    <div class="container text-center text-secondary">
-      <hr>
-      <h5>made by u/ayythernaut</h5>
-      <p>
-        COLL trainer v1.0
-        <br>this is the bare minimum release and many more features will hopefully follow
-      </p>
     </div>
 
     <div class="modal fade" id="pickcases" tabindex="-1" role="dialog">
@@ -63,6 +77,86 @@
               </h5>
             </div>
             <div class="container text-center" id="cases"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="settings" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container text-center">
+              <h5>
+                  <a class="nav-link" href="#" onclick="aufToggle()">random AUF: <span id="aufmodesetting">off</span></a>
+                  <a class="nav-link" href="#" onclick="toggle222()">2x2 mode: <span id="togglesize">off</span></a>
+                  <a class="nav-link" href="#" onclick="toggleDarkMode()">dark mode: <span id="darkmodesetting">off</span></a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="info" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">about</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container text-center">
+              <h2>CxLL trainer v1.2</h2>
+              <h5>u/ayythernaut</h5>
+              <p>This is a pretty simple CxLL trainer with clean UI and some statistics and other features. I wanted to make it because there was only one COLL trainer at the time, but I felt like it could be more minimal. PM me on reddit for questions or requests.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="casestats" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center"><span id="specificCase">case</span> statistics</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container text-center">
+              <img id="statsimage" src="http://cube.crider.co.uk/visualcube.php?fmt=svg&bg=t&view=plan&size=100&stage=cll"></img>
+              <h2>case average: <span id="specificCaseAverage">average</span></h2>
+              <h2>set average: <span id="specificSetAverage">average</span></h2>
+              <h2>total times for case: <span id="specificCaseTotal"></span></h2>
+              <h2>total times for set: <span id="specificSetTotal"></span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="overallstats" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">general statistics</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container text-center">
+              <h2><u>best to worst averages</u></h2>
+              <h5 id="bestworstlist"></h5>
+            </div>
           </div>
         </div>
       </div>
